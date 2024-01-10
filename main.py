@@ -13,8 +13,8 @@ app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token2)
 up = {"ytdl": False, 'Total': 0}
 
 links = [
-    "https://youtube.com/playlist?list=PLMC9KNkIncKvYin_USF1qoJQnIyMAfRxl&si=w7qSDmBdsGWslf4u"
-    # "https://www.pornhub.com/playlist/85569291"
+   # "https://youtube.com/playlist?list=PLMC9KNkIncKvYin_USF1qoJQnIyMAfRxl&si=w7qSDmBdsGWslf4u"
+    "https://www.pornhub.com/playlist/85569291"
 ]
 
 async def progress(current, total, task_name="Task"):
