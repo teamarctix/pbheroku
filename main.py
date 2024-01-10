@@ -17,13 +17,6 @@ links = [
     "https://www.pornhub.com/playlist/85569291"
 ]
 
-async def progress(current, total, task_name="Task"):
-    percentage = current * 100 / total
-    bar_length = 20
-    completed_blocks = int(bar_length * current / total)
-    bar = "█" * completed_blocks + " " * (bar_length - completed_blocks)
-    print(f"{task_name} Progress: [{bar}] {percentage:.1f}% Complete")
-
 def ytdlpp(link):
     command = (
         'yt-dlp --downloader aria2c --match-filter "duration>180"'
@@ -49,14 +42,11 @@ async def main():
                     for filename in os.listdir():
                         if filename.endswith(".mp4"):
                             try:
-                                command = f'vcsi "{filename}" -g 2x2 --metadata-position hidden -o "{filename.replace(".mp4",".png")}"'
-                                result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-                                await app.edit_message_text(-1002034630043, sts.id, f"Uploaded Videos:{up['Total']}\nUploading {filename}")
-                                video = await app.send_video(-1002034630043, video=filename, caption=filename.replace(".mp4",""), thumb=filename.replace(".mp4",".png"), supports_streaming=True, progress=progress)
+                                video = await app.send_video(-1002034630043, video=filename, caption=filename.replace(".mp4", ""), supports_streaming=True)
                                 up['Total'] += 1
                                 await app.edit_message_text(-1002034630043, sts.id, f"Uploaded Videos:{up['Total']}\nUploaded {filename}")
                                 try:
-                                    command = f'rm -f "{filename}" "{filename.replace(".mp4", ".png")}"' if os.name != 'nt' else f'del /Q "{filename}" "{filename.replace(".mp4", ".png")}"'
+                                    command = f'rm -f "{filename}"' if os.name != 'nt' else f'del /Q "{filename}"'
                                     result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
                                     await app.edit_message_text(-1002034630043, sts.id, f"Uploaded Videos:{up['Total']}\nCleared {filename}")
                                 except:
@@ -65,6 +55,7 @@ async def main():
                                 print(e)
                         if up["ytdl"] == True:
                             upl = False
+
 
 print("Bot Started")
 app.run(main())
