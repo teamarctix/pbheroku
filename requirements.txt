@@ -8,3 +8,4 @@ pyrogram
 tgcrypto
 moviepy
 asyncio
+gunicorn
