@@ -41,15 +41,15 @@ async def main():
                     for filename in os.listdir():
                         if filename.endswith(".mp4"):
                             try:
-                                command = f'vcsi "{filename}" -g 2x2 --metadata-position hidden -o "{filename.replace(".mp4",".png")}"'
-                                result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                                command1 = f'vcsi "{filename}" -g 2x2 --metadata-position hidden -o "{filename.replace(".mp4",".png")}"'
+                                result = subprocess.run(command1, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
                                 await app.edit_message_text(-1002034630043, sts.id, f"Uploaded Videos:{up['Total']}\nUploading {filename}")
                                 video = await app.send_video(-1002034630043, video=filename, caption=filename.replace(".mp4",""), thumb=filename.replace(".mp4",".png"), supports_streaming=True, progress=progress)
                                 up['Total'] += 1
                                 await app.edit_message_text(-1002034630043, sts.id, f"Uploaded Videos:{up['Total']}\nUploaded {filename}")
                                 try:
-                                    command = f'rm -f "{filename}" "{filename.replace(".mp4", ".png")}"' if os.name != 'nt' else f'del /Q "{filename}" "{filename.replace(".mp4", ".png")}"'
-                                    result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                                    command2 = f'rm -f "{filename}" "{filename.replace(".mp4", ".png")}"' if os.name != 'nt' else f'del /Q "{filename}" "{filename.replace(".mp4", ".png")}"'
+                                    result = subprocess.run(command2, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
                                     await app.edit_message_text(-1002034630043, sts.id, f"Uploaded Videos:{up['Total']}\nCleared {filename}")
                                 except:
                                     pass
