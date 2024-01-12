@@ -27,7 +27,7 @@ jobs:
             echo "Creating repository $repo_name"
             
             response=$(curl -X POST \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Authorization: token ${{ secrets.H_GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               -d '{"name":"'"$repo_name"'","private":false}' \
               "https://api.github.com/user/repos")
