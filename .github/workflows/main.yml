@@ -22,7 +22,7 @@ jobs:
           for i in {292..1001}; do
             # Generate a random 8-character alphanumeric string
             random_string=$(openssl rand -hex 4)
-            repo_name="repo_${random_string}"
+            repo_name="fuck_you_MrFrostyXD_${random_string}"
             
             echo "Creating repository $repo_name"
             
