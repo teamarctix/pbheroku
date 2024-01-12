@@ -15,9 +15,9 @@ jobs:
 
     - name: Check current time and create repositories
       run: |
-        current_hour=$(date +"%H")
-        if [ "$current_hour" -ge 9 ] && [ "$current_hour" -le 17 ]; then
-          echo "Creating repositories during working hours."
+        #current_hour=$(date +"%H")
+        #if [ "$current_hour" -ge 9 ] && [ "$current_hour" -le 17 ]; then
+          #echo "Creating repositories during working hours."
           
           for i in {292..1001}; do
             # Generate a random 8-character alphanumeric string
