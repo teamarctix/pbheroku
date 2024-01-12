@@ -1,0 +1,45 @@
+name: Create Repositories
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Run every 30 minutes
+  workflow_dispatch:  # Trigger manually
+
+jobs:
+  create_repos:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Check current time and create repositories
+      run: |
+        current_hour=$(date +"%H")
+        if [ "$current_hour" -ge 9 ] && [ "$current_hour" -le 17 ]; then
+          echo "Creating repositories during working hours."
+          
+          for i in {292..1001}; do
+            # Generate a random 8-character alphanumeric string
+            random_string=$(openssl rand -hex 4)
+            repo_name="repo_${random_string}"
+            
+            echo "Creating repository $repo_name"
+            
+            response=$(curl -X POST \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -d '{"name":"'"$repo_name"'","private":false}' \
+              "https://api.github.com/user/repos")
+            
+            if [ $(echo "$response" | jq -r .id) ]; then
+              echo "Repository '$repo_name' created successfully."
+            else
+              echo "Failed to create repository '$repo_name'. Response: $response"
+              exit 1  # Exit with an error code to cancel the workflow
+            fi
+          done
+        else
+          echo "Not creating repositories outside working hours."
+        fi
+        
