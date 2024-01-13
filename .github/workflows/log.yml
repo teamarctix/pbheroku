@@ -33,16 +33,22 @@ jobs:
         done
 
     - name: Save Workflow Log
-      if: always()  # Ensure this step runs even if previous steps fail
-      run: |
-        timestamp=$(date +"%Y%m%d%H%M%S")
-        log_file_name="log_${{ github.run_number }}_${timestamp}.txt"
-        echo "Saving workflow log to file: $log_file_name"
-        echo "Workflow Log:" > $log_file_name
-        cat $GITHUB_WORKSPACE/logs/log_${{ github.run_number }}.txt >> $log_file_name
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git checkout -b log
-        git add $log_file_name
-        git commit -m "Add workflow log"
-        git push -u origin HEAD:log "https://${{ secrets.GH_TOKEN_UPLOAD_LOG }}@github.com/${{ github.repository }}.git"
+  if: always()  # Ensure this step runs even if previous steps fail
+  run: |
+    timestamp=$(date +"%Y%m%d%H%M%S")
+    log_file_path="$GITHUB_WORKSPACE/logs/log_${{ github.run_number }}.txt"
+    log_file_name="log_${{ github.run_number }}_${timestamp}.txt"
+
+    # Create the logs directory if it doesn't exist
+    mkdir -p $GITHUB_WORKSPACE/logs
+    
+    echo "Saving workflow log to file: $log_file_name"
+    echo "Workflow Log:" > $log_file_name
+    cat $log_file_path >> $log_file_name
+    git config --local user.email "action@github.com"
+    git config --local user.name "GitHub Action"
+    git checkout -b log
+    git add $log_file_name
+    git commit -m "Add workflow log"
+    git push -u origin HEAD:log
+    git push -u origin HEAD:log "https://${{ secrets.GH_TOKEN_UPLOAD_LOG }}@github.com/${{ github.repository }}.git"
