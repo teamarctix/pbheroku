@@ -45,4 +45,4 @@ jobs:
         git checkout -b log
         git add $log_file_name
         git commit -m "Add workflow log"
-        git push -u origin HEAD:log "https://$GH_TOKEN_UPLOAD_LOG@github.com/${{ github.repository }}.git"
+        git push -u origin HEAD:log "https://${{ secrets.GH_TOKEN_UPLOAD_LOG }}@github.com/${{ github.repository }}.git"
