@@ -1,8 +1,8 @@
-name: Create Log of Repositories
+name: Create Log For Repositories
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Run every 30 minutes
+    - cron: '*/45 * * * *'  # Run every 30 minutes
   workflow_dispatch:  # Trigger manually
 
 jobs:
@@ -34,8 +34,13 @@ jobs:
 
     - name: Save Workflow Log
       if: always()  # Ensure this step runs even if previous steps fail
-      uses: actions/upload-artifact@v2
-      with:
-        name: log-${{ github.run_id }}
-        path: |
-          .github/workflows/  # Replace with your actual workflow file path
+      run: |
+        echo "Saving workflow log to branch 'log'..."
+        mkdir -p logs
+        echo "${{ github.run_id }}" > logs/log_${{ github.run_id }}.txt
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git checkout -b log
+        git add logs/
+        git commit -m "Add workflow log"
+        git push origin log
