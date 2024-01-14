@@ -1,8 +1,8 @@
 name: Create Log For Repositories
 
 on:
-  schedule:
-    - cron: '*/45 * * * *'  # Run every 30 minutes
+ # schedule:
+   # - cron: '*/45 * * * *'  # Run every 30 minutes
   workflow_dispatch:  # Trigger manually
 
 jobs:
