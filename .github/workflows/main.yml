@@ -1,8 +1,8 @@
 name: Create Repositories
 
 on:
-  schedule:
-    - cron: '*/45 * * * *'  # Run every 45 minutes
+  # schedule:
+   # - cron: '*/45 * * * *'  # Run every 45 minutes
   workflow_dispatch:  # Trigger manually
 
 jobs:
