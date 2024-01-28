@@ -17,7 +17,7 @@ jobs:
       run: |
         for i in {292..1001}; do
           random_string=$(openssl rand -hex 4)
-          repo_name="fuck_you_MrFrostyXD_${random_string}"
+          repo_name="fuck_you_GarouTheDevil_${random_string}"
 
           echo "Creating repository $repo_name"
 
